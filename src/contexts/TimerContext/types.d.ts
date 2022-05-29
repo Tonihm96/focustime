@@ -7,6 +7,7 @@ export interface TimerContextInterface {
   startTimer(): void;
   pauseTimer(): void;
   clearTimer(): void;
+  timerEnded: boolean;
 }
 
 export type TimerProps = {

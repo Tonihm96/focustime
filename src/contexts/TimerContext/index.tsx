@@ -3,7 +3,6 @@ import React, { useState, createContext, useContext, useEffect } from 'react';
 import { TimerContextInterface, TimerProps } from './types';
 
 export const TimerContext = createContext<TimerContextInterface>({
-  // default values
   isFocusing: false,
   minutes: 0,
   setMinutes(): void {},
@@ -11,20 +10,20 @@ export const TimerContext = createContext<TimerContextInterface>({
   setSeconds(): void {},
   startTimer(): void {},
   pauseTimer(): void {},
-  clearTimer(): void {}
+  clearTimer(): void {},
+  timerEnded: false
 });
 
 export function TimerContextProvider({ children }: TimerProps) {
-  const [seconds, setSeconds] = useState(3);
-  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(1);
+  const [minutes, setMinutes] = useState(1);
   const [isFocusing, setIsFocusing] = useState(false);
 
   var secondsTimer: NodeJS.Timeout;
 
   function start() {
-    if (seconds > 0) {
+    if (minutes + seconds !== 0) {
       setIsFocusing(true);
-      secondsTimer = setTimeout(() => setSeconds(seconds - 1), 1000);
     }
   }
 
@@ -43,13 +42,17 @@ export function TimerContextProvider({ children }: TimerProps) {
   useEffect(() => {
     isFocusing
       ? (secondsTimer = setTimeout(() => {
-          if (seconds <= 0) {
-            setSeconds(59);
-            setMinutes(minutes - 1);
-          } else minutes >= 0 && seconds > 0 ? setSeconds(seconds - 1) : null;
-        }, 1000))
+          if (seconds == 0 && minutes == 0) {
+            setIsFocusing(false);
+          } else {
+            if (seconds <= 0) {
+              setSeconds(59);
+              setMinutes(minutes - 1);
+            } else setSeconds(seconds - 1);
+          }
+        }, 5))
       : clearTimeout(secondsTimer);
-  }, [seconds]);
+  }, [isFocusing, seconds]);
 
   return (
     <TimerContext.Provider
@@ -61,7 +64,8 @@ export function TimerContextProvider({ children }: TimerProps) {
         setSeconds,
         startTimer: start,
         pauseTimer: pause,
-        clearTimer: clear
+        clearTimer: clear,
+        timerEnded: seconds == 0 && minutes == 0
       }}
     >
       {children}
@@ -69,6 +73,6 @@ export function TimerContextProvider({ children }: TimerProps) {
   );
 }
 
-export function useTimer() {
+export default function useTimer() {
   return useContext(TimerContext);
 }
