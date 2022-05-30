@@ -1,7 +1,6 @@
 import React from 'react';
 
 import useTimer from '../../contexts/TimerContext';
-import theme from '../../global/styles/theme';
 
 import { Container, ClockText } from './styles';
 
@@ -17,3 +16,4 @@ export function Clock() {
     </Container>
   );
 }
+/**/

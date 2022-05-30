@@ -7,9 +7,10 @@ import { Container, TimeText } from './styles';
 
 interface TimeButtonProps extends TouchableOpacityProps {
   time: string;
+  custom?: boolean;
 }
 
-export function TimeButton({ time }: TimeButtonProps) {
+export function TimeButton({ time, ...props }: TimeButtonProps) {
   const { setMinutes, setSeconds } = useTimer();
 
   return (
@@ -18,6 +19,7 @@ export function TimeButton({ time }: TimeButtonProps) {
         setMinutes(Number(time));
         setSeconds(0);
       }}
+      {...props}
     >
       <TimeText>{time}</TimeText>
     </Container>

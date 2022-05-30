@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 
 import useTimer from '../../contexts/TimerContext';
 
@@ -9,7 +8,7 @@ import { ControlButton } from '../ControlButton';
 import { TimeButton } from '../TimeButton';
 
 export function Controller() {
-  const { isFocusing, startTimer, pauseTimer } = useTimer();
+  const { isFocusing, isDoneFocusing, startTimer, pauseTimer } = useTimer();
 
   return (
     <Container>
@@ -17,13 +16,13 @@ export function Controller() {
         onPress={isFocusing ? pauseTimer : startTimer}
         name={isFocusing ? 'pause' : 'play'}
       />
-      {isFocusing ? null : (
+      {isDoneFocusing ? (
         <TimerButtonsContainer>
           <TimeButton time='20' />
-          <TimeButton time='25' />
+          <TimeButton time='25' style={{ marginTop: 30 }} />
           <TimeButton time='30' />
         </TimerButtonsContainer>
-      )}
+      ) : null}
     </Container>
   );
 }

@@ -11,7 +11,7 @@ export const TimerContext = createContext<TimerContextInterface>({
   startTimer(): void {},
   pauseTimer(): void {},
   clearTimer(): void {},
-  timerEnded: false
+  isDoneFocusing: false
 });
 
 export function TimerContextProvider({ children }: TimerProps) {
@@ -65,7 +65,7 @@ export function TimerContextProvider({ children }: TimerProps) {
         startTimer: start,
         pauseTimer: pause,
         clearTimer: clear,
-        timerEnded: seconds == 0 && minutes == 0
+        isDoneFocusing: seconds == 0 && minutes == 0
       }}
     >
       {children}

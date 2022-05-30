@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Container } from './styles';
 
-import { Clock } from '../Clock';
-import { Controller } from '../Controller';
+import { Clock } from '../../components/Clock';
+import { Controller } from '../../components/Controller';
 
 export function Main() {
   return (
