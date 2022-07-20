@@ -6,6 +6,7 @@ import { Container, TimerButtonsContainer } from './styles';
 
 import { ControlButton } from '../ControlButton';
 import { TimeButton } from '../TimeButton';
+import { CancelButton } from '../CancelButton';
 
 export function Controller() {
   const { isFocusing, isDoneFocusing, startTimer, pauseTimer } = useTimer();
@@ -22,7 +23,9 @@ export function Controller() {
           <TimeButton time='25' style={{ marginTop: 30 }} />
           <TimeButton time='30' />
         </TimerButtonsContainer>
-      ) : null}
+      ) : (
+        <CancelButton />
+      )}
     </Container>
   );
 }

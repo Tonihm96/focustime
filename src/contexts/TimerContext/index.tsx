@@ -15,8 +15,8 @@ export const TimerContext = createContext<TimerContextInterface>({
 });
 
 export function TimerContextProvider({ children }: TimerProps) {
-  const [seconds, setSeconds] = useState(1);
-  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
   const [isFocusing, setIsFocusing] = useState(false);
 
   var secondsTimer: NodeJS.Timeout;
@@ -28,13 +28,12 @@ export function TimerContextProvider({ children }: TimerProps) {
   }
 
   function pause() {
-    setIsFocusing(false);
     clearTimeout(secondsTimer);
+    setIsFocusing(false);
   }
 
   function clear() {
-    setIsFocusing(false);
-    clearTimeout(secondsTimer);
+    pause();
     setSeconds(0);
     setMinutes(0);
   }
@@ -50,8 +49,8 @@ export function TimerContextProvider({ children }: TimerProps) {
               setMinutes(minutes - 1);
             } else setSeconds(seconds - 1);
           }
-        }, 5))
-      : clearTimeout(secondsTimer);
+        }, 1000))
+      : null; //clearTimeout(secondsTimer);
   }, [isFocusing, seconds]);
 
   return (
